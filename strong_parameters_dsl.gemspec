@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["diego@greyrobot.com"]
   spec.description   = %q{Provides a light DSL for defining strong parameters in Rails controllers}
   spec.summary       = %q{Provides a light DSL for defining strong parameters in Rails controllers}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/DiegoSalazar/StrongParametersDSL"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
