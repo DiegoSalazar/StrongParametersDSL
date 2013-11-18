@@ -25,7 +25,9 @@ module StrongParametersDsl
         #     end
         #
         def self.strong_params(name, options = {}, &block)
-          define_method "#{name}_params" do
+          param_method_name = "#{name}_params".to_sym
+
+          define_method param_method_name do
             strongified = params.require name
 
             if block_given?
@@ -34,6 +36,8 @@ module StrongParametersDsl
               strongified.permit *Array(options[:permit])
             end
           end
+          
+          private param_method_name
         end
       end
     end
