@@ -15,7 +15,7 @@ Or install it yourself as:
 ## Usage
 
 When Rails came out with [Strong Parameters](http://edgeapi.rubyonrails.org/classes/ActionController/StrongParameters.html) it just didn't feel Ruby enough.
-This gem is a simple workaround that will let you declaratively define your strong parameters.
+This gem is a simple workaround that will let you declaratively define your strong parameters as you would your filters.
 
 ```ruby
 class UsersController < ActionController::Base
