@@ -37,7 +37,7 @@ end
 ```
 
 The block passed to ```strong_params``` is evaluated in the context of the ActionController::Parameters instance that is returned by ```params```.
-Or more specifically by the strongified instance return by calling ```params.require(:some_key)```.
+Or more specifically by the strongified instance returned by calling ```params.require(:some_key)```.
 
 There is an issue regarding allowing arbitrary hashes in some keys which was [debated here](https://github.com/rails/rails/issues/9454#issuecomment-14167664).
 The solution wasn't very neat but it could be added as an instance method on the Parameters instance and then used as part of this DSL. Ideas welcome.
