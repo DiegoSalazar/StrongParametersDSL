@@ -14,6 +14,9 @@ module StrongParametersDsl
         #       ... or ...
         #       strong_params :user, permit: [name, :email, comments_attributes: [:comment, :post_id]]
         #      
+        #       # you can also declare a key whose value is a hash with arbitrary keys
+        #       strong_params :activity, any: [:api_log], permit: [:event, :timestamp, :ip_address]
+        #      
         #
         #       def create
         #         # the named param method is created based on the argument passed
@@ -28,15 +31,20 @@ module StrongParametersDsl
           param_method_name = "#{name}_params".to_sym
 
           define_method param_method_name do
-            strongified = params.require name
-
-            if block_given?
-              strongified.instance_exec &block
-            else
-              strongified.permit *Array(options[:permit])
+            params.require(name).tap do |strongified|
+              if block_given?
+                strongified.instance_exec &block
+              else
+                strongified.permit *Array(options[:permit])
+                
+                # shortcut to adding a key whose value is a hash with arbitrary keys
+                if options[:any].present?
+                  Array(options[:any]).map { |key| strongified[key] = params[name][key] }
+                end
+              end
             end
           end
-          
+
           private param_method_name
         end
       end
