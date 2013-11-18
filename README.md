@@ -23,7 +23,7 @@ class UsersController < ActionController::Base
     permit :name, :email, comments_attributes: [:comment, :post_id]
   end
   # ... or ...
-  strong_params :user, permit: [name, :email, comments_attributes: [:comment, :post_id]]
+  strong_params :user, permit: [:name, :email, comments_attributes: [:comment, :post_id]]
 
 
   def create
