@@ -32,14 +32,18 @@ module StrongParametersDsl
 
           define_method param_method_name do
             params.require(name).tap do |strongified|
-              if block_given?
-                strongified.instance_exec &block
-              else
+              # use a block to assign permitted keys
+              strongified.instance_exec &block if block_given?
+
+              # mix and match using hash options to assign permitted values
+              if options[:permit].present?
                 strongified.permit *Array(options[:permit])
-                
-                # shortcut to adding a key whose value is a hash with arbitrary keys
-                if options[:any].present?
-                  Array(options[:any]).map { |key| strongified[key] = params[name][key] }
+              end
+
+              # shortcut to adding a key whose value is a hash with arbitrary keys
+              if options[:any].present?
+                Array(options[:any]).map do |key|
+                  strongified[key] = params[name][key]
                 end
               end
             end

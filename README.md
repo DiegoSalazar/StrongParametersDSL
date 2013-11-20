@@ -22,8 +22,17 @@ class UsersController < ActionController::Base
   strong_params :user do
     permit :name, :email, comments_attributes: [:comment, :post_id]
   end
+  
   # ... or ...
   strong_params :user, permit: [:name, :email, comments_attributes: [:comment, :post_id]]
+  
+  # an additional feature added is the ability to permit a key whose value is an arbitrary hash
+  strong_params :user, any: :data
+
+  # you can also mix and match any of the above approaches
+  strong_params :user, any: :data, permit: :name do
+    permit :more_keys, :and_stuff
+  end
 
 
   def create
@@ -31,7 +40,7 @@ class UsersController < ActionController::Base
     # to the strong_params call
     User.create user_params
 
-    ... rest of code ...
+    # ... rest of code ...
   end
 end
 ```
